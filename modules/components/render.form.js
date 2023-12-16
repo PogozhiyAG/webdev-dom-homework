@@ -61,7 +61,7 @@ const initHandlers = () => {
             return;
         }
     
-        startLongProcess('Сообщение отправляется...', () => postLoadAndRenderComments(inputName.value, inputComment.value));        
+        startLongProcess('Сообщение отправляется...', () => postLoadAndRenderComments(inputComment.value));        
         validateComment();
     };
     
@@ -88,12 +88,12 @@ const initHandlers = () => {
             .then(render);
     };
     
-    const postLoadAndRenderComments = (name, text) => {
+    const postLoadAndRenderComments = (text) => {
         const clearCommentInput = () => {
             inputComment.value = '';
         };
     
-        return postComment(name, text)
+        return postComment(text)
             .then(clearCommentInput)
             .then(loadAndRenderComments)
     };

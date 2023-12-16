@@ -44,13 +44,12 @@ export const loadCommentsData = () =>
 
 
 
-export const postComment = (name, text) => {      
+export const postComment = (text) => {      
     const requestOptions = {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify({
             text: endcodeSpecialSymbols(text),
-            name: endcodeSpecialSymbols(name),
             forceError: true
         })  
     };
