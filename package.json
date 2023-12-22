@@ -1,0 +1,23 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "Learning project",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PogozhiyAG/webdev-dom-homework.git"
+  },
+  "keywords": [
+    "js",
+    "learn"
+  ],
+  "author": "Pogozhiy Aleksander",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PogozhiyAG/webdev-dom-homework/issues"
+  },
+  "homepage": "https://github.com/PogozhiyAG/webdev-dom-homework#readme"
+}
