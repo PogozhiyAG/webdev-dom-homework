@@ -1,4 +1,5 @@
 import { formatDateTime, endcodeSpecialSymbols } from "./utils/utils.format.js";
+import { format } from 'date-fns'
 import { delay } from './utils/utils.promise.js';
 
 
@@ -36,7 +37,7 @@ export const loadCommentsData = () =>
     .then(result => result.comments.map(item => ({
         id: item.id,
         author: item.author.name,
-        date: formatDateTime(new Date(item.date)),
+        date: format(new Date(item.date), 'yyyy-MM-dd hh.mm.ss'),
         text: item.text,
         isLiked: item.isLiked,
         likesCount: item.likes
