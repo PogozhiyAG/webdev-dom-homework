@@ -7,16 +7,16 @@ export const formatDateTime = (date) => {
     return `${day}.${month}.${year} ${hours}:${minutes}`;
 };
 
+export const endcodeSpecialSymbols = (s) =>
+    s
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
 
-export const endcodeSpecialSymbols = s =>
-    s.replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-    
-    
-export const decodeSpecialSymbols = s =>
-    s.replaceAll("&amp;", "&")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"');
+export const decodeSpecialSymbols = (s) =>
+    s
+        .replaceAll('&amp;', '&')
+        .replaceAll('&lt;', '<')
+        .replaceAll('&gt;', '>')
+        .replaceAll('&quot;', '"');

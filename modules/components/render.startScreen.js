@@ -1,11 +1,11 @@
-import { reloadComments } from "../commentsState.js";
-import { navigateTo } from "../renderEngine.js";
-import { delay } from "../utils/utils.promise.js";
+import { reloadComments } from '../commentsState.js';
+import { navigateTo } from '../renderEngine.js';
+import { delay } from '../utils/utils.promise.js';
 
-const postRender = () => {    
+const postRender = () => {
     delay(700)
-    .then(() => reloadComments())
-    .then(() => navigateTo('main'));
+        .then(() => reloadComments())
+        .then(() => navigateTo('main'));
 };
 
 export const renderStartScreen = (afterRender) => {
