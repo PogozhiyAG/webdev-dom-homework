@@ -55,9 +55,9 @@ export const postComment = (text) => {
 
     const doPost = () => {
         return fetch(API_URL, requestOptions).then(async (response) => {
-            if (response.status == 500) {
+            if (response.status === 500) {
                 return delay(200).then(doPost);
-            } else if (response.status == 400) {
+            } else if (response.status === 400) {
                 const responseJson = await response.json();
                 return Promise.reject(new Error(responseJson.error));
             }

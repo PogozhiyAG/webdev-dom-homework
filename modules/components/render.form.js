@@ -1,5 +1,5 @@
-import { deleteComment, loadCommentsData, postComment, user } from '../api.js';
-import { comments, reloadComments, setComments } from '../commentsState.js';
+import { deleteComment, postComment, user } from '../api.js';
+import { comments, reloadComments } from '../commentsState.js';
 import { BEGIN_QUOTE_MARK, END_QUOTE_MARK } from './render.commentList.js';
 import { render } from '../renderEngine.js';
 import { decodeSpecialSymbols } from '../utils/utils.format.js';
@@ -7,7 +7,6 @@ import { runLongProcess } from '../utils/utils.promise.js';
 
 const initHandlers = () => {
     const formAddComment = document.querySelector('.add-form');
-    const inputName = formAddComment.querySelector('.add-form-name');
     const inputComment = formAddComment.querySelector('.add-form-text');
     const buttonAddComment = document.getElementById('button-add-comment');
     const messagePannel = document.getElementById('message-pannel');
@@ -38,7 +37,7 @@ const initHandlers = () => {
         (buttonAddComment.disabled = !validationState.isValid());
 
     const setButtonRemoveCommentEnabled = () =>
-        (buttonRemoveComment.disabled = comments.length == 0);
+        (buttonRemoveComment.disabled = comments.length === 0);
 
     const setInputValidityStatus = (input, status) => {
         if (status) {
@@ -94,7 +93,7 @@ const initHandlers = () => {
     };
 
     const removeLastComment = async () => {
-        if (comments.length == 0) {
+        if (comments.length === 0) {
             return;
         }
 

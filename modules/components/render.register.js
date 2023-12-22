@@ -8,7 +8,7 @@ const initHandlers = () => {
 
     document
         .getElementById('register-form-button')
-        .addEventListener('click', async (event) => {
+        .addEventListener('click', async () => {
             await register(
                 nameInput.value,
                 loginInput.value,

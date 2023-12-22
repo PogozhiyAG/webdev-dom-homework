@@ -7,7 +7,7 @@ const initHandlers = () => {
 
     document
         .getElementById('login-form-button')
-        .addEventListener('click', async (event) => {
+        .addEventListener('click', async () => {
             await login(loginInput.value, passwordInput.value)
                 .then(() => navigateTo('startScreen'))
                 .catch((error) => alert(error.message));
