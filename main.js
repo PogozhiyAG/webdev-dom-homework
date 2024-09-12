@@ -1,3 +1,3 @@
-import { navigateTo } from "./modules/renderEngine.js";
+import { navigateTo } from './modules/renderEngine.js';
 
 navigateTo('startScreen');

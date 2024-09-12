@@ -1,65 +1,63 @@
-import { formatDateTime, endcodeSpecialSymbols } from "./utils/utils.format.js";
+import { endcodeSpecialSymbols } from './utils/utils.format.js';
+import { format } from 'date-fns';
 import { delay } from './utils/utils.promise.js';
-
 
 const API_URL = 'https://wedev-api.sky.pro/api/v2/pogozhiyag/comments';
 const API_USER_URL = 'https://wedev-api.sky.pro/api/user';
 
-export let user = localStorage.user ? JSON.parse(localStorage.user) : null; 
+export let user = localStorage.user ? JSON.parse(localStorage.user) : null;
 
-export const setUser = value => {
+export const setUser = (value) => {
     user = value;
-    if(user){
+    if (user) {
         localStorage.user = JSON.stringify(user);
-    }else{
+    } else {
         delete localStorage.user;
     }
-}
+};
 
 export const signOut = () => setUser(null);
 
-
 const getAuthHeader = () => {
-    if(user){
+    if (user) {
         return {
-            Authorization: `Bearer ${user.token}`
+            Authorization: `Bearer ${user.token}`,
         };
     }
     return {};
-}
+};
 
-export const loadCommentsData = () => 
+export const loadCommentsData = () =>
     fetch(API_URL, {
-        headers: getAuthHeader()
+        headers: getAuthHeader(),
     })
-    .then(response => response.json())
-    .then(result => result.comments.map(item => ({
-        id: item.id,
-        author: item.author.name,
-        date: formatDateTime(new Date(item.date)),
-        text: item.text,
-        isLiked: item.isLiked,
-        likesCount: item.likes
-    })));
+        .then((response) => response.json())
+        .then((result) =>
+            result.comments.map((item) => ({
+                id: item.id,
+                author: item.author.name,
+                date: format(new Date(item.date), 'yyyy-MM-dd hh.mm.ss'),
+                text: item.text,
+                isLiked: item.isLiked,
+                likesCount: item.likes,
+            })),
+        );
 
-
-
-export const postComment = (text) => {      
+export const postComment = (text) => {
     const requestOptions = {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify({
             text: endcodeSpecialSymbols(text),
-            forceError: true
-        })  
+            forceError: true,
+        }),
     };
 
     const doPost = () => {
-        return fetch(API_URL, requestOptions)
-        .then(async response => {
-            if(response.status == 500) {
+        return fetch(API_URL, requestOptions).then(async (response) => {
+            if (response.status === 500) {
                 return delay(200).then(doPost);
-            } else if(response.status == 400){
+            } else if (response.status === 400) {
                 const responseJson = await response.json();
                 return Promise.reject(new Error(responseJson.error));
             }
@@ -69,51 +67,42 @@ export const postComment = (text) => {
     return doPost();
 };
 
-
-export const deleteComment = id => {
+export const deleteComment = (id) => {
     return fetch(API_URL + `/${id}`, {
         method: 'DELETE',
-        headers: getAuthHeader()
+        headers: getAuthHeader(),
     });
 };
 
-
-export const toggleLikeComment = id => {
+export const toggleLikeComment = (id) => {
     return fetch(API_URL + `/${id}/toggle-like`, {
         method: 'POST',
-        headers: getAuthHeader()
+        headers: getAuthHeader(),
     });
 };
 
-
-
-export const login = (login, password) => 
+export const login = (login, password) =>
     fetch(API_USER_URL + '/login', {
         method: 'POST',
-        body: JSON.stringify({login, password})
-    })
-    .then(async r => {
-        if(r.ok){
+        body: JSON.stringify({ login, password }),
+    }).then(async (r) => {
+        if (r.ok) {
             const j = await r.json();
             setUser(j.user);
-        } else if (r.status === 400){
-            throw new Error("Неправильный логин или пароль");
+        } else if (r.status === 400) {
+            throw new Error('Неправильный логин или пароль');
         }
     });
 
-
-
-export const register = (name, login, password) => 
+export const register = (name, login, password) =>
     fetch(API_USER_URL, {
         method: 'POST',
-        body: JSON.stringify({name, login, password})
-    })
-    .then(async r => {
-        if(r.ok){
+        body: JSON.stringify({ name, login, password }),
+    }).then(async (r) => {
+        if (r.ok) {
             const j = await r.json();
             setUser(j.user);
         } else {
-            throw new Error('Видимо, такой пользователь уже есть')
-        }        
+            throw new Error('Видимо, такой пользователь уже есть');
+        }
     });
-
